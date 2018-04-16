@@ -14,7 +14,7 @@ import (
 	"time"
 	"runtime"
 
-	"github.com/alexjlockwood/gcm"
+	"github.com/nikola166/gcm"
 	apns "github.com/anachronistic/apns"
 	"github.com/gorilla/websocket"
 	"github.com/spf13/viper"

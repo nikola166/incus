@@ -2,7 +2,7 @@ package incus
 
 import "encoding/json"
 import "testing"
-import "github.com/alexjlockwood/gcm"
+import "github.com/nikola166/gcm"
 import apns "github.com/anachronistic/apns"
 import mock "github.com/stretchr/testify/mock"
 
