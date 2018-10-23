@@ -180,7 +180,6 @@ func (this *CommandMsg) formatMessage() (*Message, error) {
 	msg := &Message{
 		Event: event,
 		Data:  data,
-		Notification: notification,
 		Time:  time.Now().UTC().Unix(),
 	}
 
