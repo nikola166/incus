@@ -20,7 +20,7 @@ type CommandMsg struct {
 type Message struct {
 	Event string                 `json:"event"`
 	Data map[string]interface{} `json:"data"`
-	Notification map[string]interface{} `json:"notification"`
+	Notification map[string]interface{} `json:"notification,omitempty"`
 	Time  int64                  `json:"time"`
 	Url   string                 `json:"internal_url,omitempty"`
 }
@@ -172,9 +172,8 @@ func (this *CommandMsg) FromRedis(server *Server) {
 func (this *CommandMsg) formatMessage() (*Message, error) {
 	event, e_ok := this.Message["event"].(string)
 	data, b_ok := this.Message["data"].(map[string]interface{})
-	notification, n_ok := this.Message["notification"].(map[string]interface{})
 
-	if !b_ok || !e_ok || !n_ok {
+	if !b_ok || !e_ok {
 		return nil, errors.New("Could not format message")
 	}
 
@@ -183,6 +182,13 @@ func (this *CommandMsg) formatMessage() (*Message, error) {
 		Data:  data,
 		Notification: notification,
 		Time:  time.Now().UTC().Unix(),
+	}
+
+	if (strings.ToLower(this.Command["push_type"]) == "android") {
+		notification, n_ok := this.Message["notification"].(map[string]interface{})
+		if n_ok {
+			msg.Notification = notification;
+		}
 	}
 
 	// hack for bad version of Imgur iOS client
